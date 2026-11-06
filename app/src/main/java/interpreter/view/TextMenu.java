@@ -22,7 +22,7 @@ public class TextMenu {
                 switch(option) {
                     case "0": return;
                     case "1":
-                        for(int i=1;i<=3;i++) output.println(i + ". " + Examples.get(i));
+                        for(int i=1;i<=4;i++) output.println(i + ". " + Examples.get(i));
                         output.print("Exemplul: ");
                         if (!input.hasNextLine()) return;
                         selected=Examples.get(Integer.parseInt(input.nextLine().trim()));

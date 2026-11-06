@@ -21,5 +21,7 @@ public class Controller {
         display(state);
         while (!state.getExeStack().isEmpty()) { oneStep(state); display(state); }
     }
-    private void display(PrgState state) { if (displayFlag) output.println(state + "\n"); }
+    private void display(PrgState state) {
+        if (displayFlag)
+            output.println(state + "\n"); }
 }
