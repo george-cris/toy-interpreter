@@ -67,22 +67,49 @@ public final class Examples {
             )
     );
 
-    public static final IStmt EX4 = new CompStmt(
+    public static final IStmt EX4 = fileExample("test.in");
+
+    public static final IStmt EX5 = sequence(
             new VarDeclStmt("a", new IntType()),
-            new CompStmt(
-                    new AssignStmt("a", new ValueExp(new BoolValue(true))),
-                    new PrintStmt(new VarExp("a"))
-            )
+            new VarDeclStmt("b", new IntType()),
+            new AssignStmt("a", new ValueExp(new IntValue(5))),
+            new AssignStmt("b", new ValueExp(new IntValue(7))),
+            new IfStmt(new RelationalExp(RelOp.LT, new VarExp("a"), new VarExp("b")),
+                    new PrintStmt(new VarExp("a")), new PrintStmt(new VarExp("b")))
     );
 
+    public static IStmt fileExample(String fileName) {
+        var file = new VarExp("varf");
+        var value = new VarExp("varc");
+        return sequence(
+                new VarDeclStmt("varf", new StringType()),
+                new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
+                new OpenRFileStmt(file),
+                new VarDeclStmt("varc", new IntType()),
+                new ReadFileStmt(file, "varc"),
+                new PrintStmt(value),
+                new ReadFileStmt(file, "varc"),
+                new PrintStmt(value),
+                new CloseRFileStmt(file)
+        );
+    }
+
+    private static IStmt sequence(IStmt... statements) {
+        IStmt program = statements[statements.length - 1];
+        for (int i = statements.length - 2; i >= 0; i--) {
+            program = new CompStmt(statements[i], program);
+        }
+        return program;
+    }
     public static IStmt get(int number) {
         return switch (number) {
             case 1 -> EX1;
             case 2 -> EX2;
             case 3 -> EX3;
             case 4 -> EX4;
+            case 5 -> EX5;
             default -> throw new IllegalArgumentException(
-                    "Alege un exemplu intre 1 si 4."
+                    "Alege un exemplu intre 1 si 5."
             );
         };
     }
