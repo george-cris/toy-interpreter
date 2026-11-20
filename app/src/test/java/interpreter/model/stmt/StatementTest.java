@@ -12,7 +12,7 @@ import interpreter.controller.Controller;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 class StatementTest {
- private PrgState state() throws MyException { var s=new PrgState(new MyStack<>(),new MyDictionary<>(),new MyList<>(),new NopStmt()); s.getExeStack().pop(); return s; }
+ private PrgState state() throws MyException { var s=PrgState.of(new NopStmt()); s.getExeStack().pop(); return s; }
  private IExp n(int n) { return new ValueExp(new IntValue(n)); }
  @Test void compoundPushesFirstOnTop() throws MyException { var s=state(); IStmt a=new PrintStmt(n(1)),b=new PrintStmt(n(2)); new CompStmt(a,b).execute(s); assertSame(a,s.getExeStack().pop()); assertSame(b,s.getExeStack().pop()); }
  @Test void declarationsUseDefaults() throws MyException { var s=state(); new VarDeclStmt("i",new IntType()).execute(s); new VarDeclStmt("b",new BoolType()).execute(s); assertEquals(new IntValue(0),s.getSymTable().lookup("i")); assertEquals(new BoolValue(false),s.getSymTable().lookup("b")); }

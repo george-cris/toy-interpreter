@@ -14,5 +14,12 @@ public class MyDictionary<K,V> implements IDictionary<K,V> {
         if (!isDefined(key)) throw new ADTException("missing key: " + key);
         data.put(key,value);
     }
+    public void remove(K key) throws ADTException {
+        if (!isDefined(key)) throw new ADTException("missing key: " + key);
+        data.remove(key);
+    }
+    public Map<K,V> toMap() {
+        return java.util.Collections.unmodifiableMap(new HashMap<>(data));
+    }
     public String toString() { return data.toString(); }
 }

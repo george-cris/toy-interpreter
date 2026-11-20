@@ -13,7 +13,7 @@ import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import java.io.*;
 class ControllerTest {
- private PrgState state(IStmt p) { return new PrgState(new MyStack<>(),new MyDictionary<>(),new MyList<>(),p); }
+ private PrgState state(IStmt p) { return PrgState.of(p); }
  @Test void allExamplesHaveExpectedOutput() throws MyException { int[] expected={2,18,2}; for(int i=1;i<=3;i++) { var s=state(Examples.get(i)); new Controller(new Repository(s),false).allStep(); assertTrue(s.getExeStack().isEmpty()); assertEquals(1,s.getOut().size()); assertEquals(new IntValue(expected[i-1]),s.getOut().get(0)); } }
  @Test void emptyStackStepThrows() throws MyException { var s=state(new NopStmt()); var c=new Controller(new Repository(s),false); c.oneStep(s); assertThrows(StatementException.class,()->c.oneStep(s)); }
  @Test void exampleOneMatchesEveryDocumentedState() throws MyException {

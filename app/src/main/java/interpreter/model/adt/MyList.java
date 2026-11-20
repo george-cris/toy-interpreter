@@ -10,5 +10,6 @@ public class MyList<T> implements IList<T> {
         return data.get(index);
     }
     public int size() { return data.size(); }
+    public List<T> toList() { return List.copyOf(data); }
     public String toString() { return data.toString(); }
 }

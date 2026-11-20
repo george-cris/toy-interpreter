@@ -1,6 +1,7 @@
 package interpreter.model.adt;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.List;
 import interpreter.exceptions.ADTException;
 public class MyStack<T> implements IStack<T> {
     private final Deque<T> data = new ArrayDeque<>();
@@ -10,5 +11,6 @@ public class MyStack<T> implements IStack<T> {
         return data.pop();
     }
     public boolean isEmpty() { return data.isEmpty(); }
+    public List<T> toList() { return List.copyOf(data); }
     public String toString() { return data.toString(); }
 }
